@@ -1,0 +1,9 @@
+<h2> Sections </h2>
+<table border="1" width="100%">
+ <% sections.each do |x| %>
+   <tr> 
+   <td><%= x.name %></td>
+   <td><button class="section" data-id="<%= x.id %>">Add Section</button></td>
+   </tr>
+ <% end %>
+</table>

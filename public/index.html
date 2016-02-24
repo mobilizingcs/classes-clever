@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="ohmage.js"></script>
+<script>
+$( document ).ready(function() {
+  var oh = Ohmage("/app", "clever-classes")   
+
+  //global error handler. In ohmage 200 means unauthenticated
+  oh.callback("error", function(msg, code, req){
+      (code == 200) ? window.location.replace("/#login") : message("<strong>Error! </strong>" + msg);
+  });
+
+  //prevent timeout
+  oh.keepalive();
+
+  $.ajax({
+    url: "sections",
+    headers: {"Authorization": "Bearer "+$.cookie("KEYCLOAK_TOKEN")},
+  }).done(function(data) {
+    $( "#content" ).html(data);
+    $(".section").click(function(){
+      var section_id = $(this).data('id');
+      $.ajax({
+        url: "section/" + section_id + "/students",
+        headers: {"Authorization": "Bearer "+$.cookie("KEYCLOAK_TOKEN")},
+      }).done(function(data) {
+        $.each(data, function(i,v) {
+          console.log("I would create a user with username: "+v["credentials"]["district_username"]+", and email: "+v["email"])
+        });
+      });
+    });
+  });
+});
+</script>
+</head>
+<body>
+<div id="content"></div>
+</body>
+</html>
