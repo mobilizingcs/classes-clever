@@ -13,7 +13,7 @@ GEM
     mime-types (1.25.1)
     multi_json (1.11.2)
     puma (2.16.0)
-    rack (1.6.4)
+    rack (1.6.13)
     rack-protection (1.5.3)
       rack
     rb-fsevent (0.9.7)
